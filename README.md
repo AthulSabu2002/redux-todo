@@ -16,14 +16,13 @@ A straightforward Todo List application built with React, TypeScript, and Redux 
 - TypeScript
 - Redux Toolkit
 - Tailwind CSS
-- Framer Motion
 
 ## Getting Started
 
 ```bash
 # Clone the repository
 git clone https://github.com/AthulSabu2002/redux-todo.git
-cd redux-todo-app
+cd redux-todo
 
 # Install dependencies
 npm install
