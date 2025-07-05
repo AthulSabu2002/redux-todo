@@ -1,43 +1,26 @@
-interface FilterButtonsProps {
-  filter: 'all' | 'active' | 'completed';
-  setFilter: (filter: 'all' | 'active' | 'completed') => void;
-}
+import { useDispatch, useSelector } from 'react-redux';
+import { setFilter } from '../features/todos/todosSlice';
+import type { RootState } from '../store';
 
-const FilterButtons = ({ filter, setFilter }: FilterButtonsProps) => {
+export default function FilterButtons() {
+  const dispatch = useDispatch();
+  const currentFilter = useSelector((state: RootState) => state.todos.filter);
+
   return (
-    <div className="flex justify-center space-x-3 mb-6">
-      <button
-        className={`px-5 py-2.5 rounded-md text-sm font-medium transition-colors border-2 ${
-          filter === 'all' 
-            ? 'bg-slate-800 text-white border-slate-800' 
-            : 'bg-white text-slate-700 border-slate-300 hover:border-slate-400'
-        }`}
-        onClick={() => setFilter('all')}
-      >
-        All
-      </button>
-      <button
-        className={`px-5 py-2.5 rounded-md text-sm font-medium transition-colors border-2 ${
-          filter === 'active' 
-            ? 'bg-slate-800 text-white border-slate-800' 
-            : 'bg-white text-slate-700 border-slate-300 hover:border-slate-400'
-        }`}
-        onClick={() => setFilter('active')}
-      >
-        Active
-      </button>
-      <button
-        className={`px-5 py-2.5 rounded-md text-sm font-medium transition-colors border-2 ${
-          filter === 'completed' 
-            ? 'bg-slate-800 text-white border-slate-800' 
-            : 'bg-white text-slate-700 border-slate-300 hover:border-slate-400'
-        }`}
-        onClick={() => setFilter('completed')}
-      >
-        Completed
-      </button>
+    <div className="flex gap-2 bg-white rounded-lg shadow-sm p-1">
+      {['all', 'active', 'completed'].map(filterType => (
+        <button
+          key={filterType}
+          onClick={() => dispatch(setFilter(filterType as 'all' | 'active' | 'completed'))}
+          className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${
+            currentFilter === filterType 
+              ? 'bg-slate-800 text-white' 
+              : 'text-slate-600 hover:bg-slate-100'
+          }`}
+        >
+          {filterType.charAt(0).toUpperCase() + filterType.slice(1)}
+        </button>
+      ))}
     </div>
   );
-};
-
-export default FilterButtons;
+}
